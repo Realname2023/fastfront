@@ -1,0 +1,63 @@
+/* Стили для адаптивной таблицы */
+.responsive-table {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+  }
+  
+  .responsive-table tr {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  
+  .responsive-table td {
+    flex: 1 1 calc(33.33% - 10px); /* Устанавливаем ширину 33% с учетом отступов */
+    margin: 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: center;
+  }
+  
+  .responsive-table img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Адаптация для планшетов */
+  @media (max-width: 768px) {
+    .responsive-table td {
+      flex: 1 1 calc(50% - 10px); /* На планшетах ширина колонок 50% */
+    }
+  }
+  
+  /* Адаптация для телефонов */
+  @media (max-width: 480px) {
+    .responsive-table td {
+      flex: 1 1 100%; /* На телефонах каждая колонка занимает 100% */
+    }
+  }
+  
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+  }
+  
