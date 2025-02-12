@@ -17,8 +17,7 @@ const App = () => {
     // Асинхронная функция для получения данных
     const fetchDataCategories = async () => {
         try {
-            const response = await axios.get(`${API_URL}`,
-            {headers: {'ngrok-skip-browser-warning': 6024}}); // Ваш эндпоинт
+            const response = await axios.get(`${API_URL}`); // Ваш эндпоинт
             setDataCategories(response.data); // Сохранение данных в состоянии
         } catch (err) {
             setError(err.message); // Сохранение ошибки
@@ -30,8 +29,7 @@ const App = () => {
         // Функция для получения городов
     const fetchDataCities = async () => {
         try {
-            const response = await axios.get(`${API_URL}cities/`,
-            {headers: {'ngrok-skip-browser-warning': 6024}}); // Эндпоинт для городов
+            const response = await axios.get(`${API_URL}cities/`); // Эндпоинт для городов
             setDataCities(response.data);
         } catch (err) {
             setError(err.message);

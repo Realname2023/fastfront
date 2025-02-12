@@ -17,9 +17,7 @@ const Cart = () => {
   const fetchCart = async () => {
     try {
       const response = await axios.get(
-        `${API_URL}cart/get_carts/${userId}/`,
-        {headers: {'ngrok-skip-browser-warning': 6024}}
-      );
+        `${API_URL}cart/get_carts/${userId}/`);
 
       const { goods, arenda_goods } = response.data;
       setGoodsItems(goods || []);
@@ -50,8 +48,7 @@ const Cart = () => {
     };
 
     try {
-      await axios.patch(`${API_URL}cart/update/`, payload, 
-      {headers: {'ngrok-skip-browser-warning': 6024}});
+      await axios.patch(`${API_URL}cart/update/`, payload);
 
       setGoodsItems((prevGoods) =>
         prevGoods.map((prevItem) =>
@@ -89,8 +86,7 @@ const Cart = () => {
     };
 
     try {
-      await axios.patch(`${API_URL}cart/update/`, payload, 
-      {headers: {'ngrok-skip-browser-warning': 6024}});
+      await axios.patch(`${API_URL}cart/update/`, payload);
 
       setArendaItems((prevArenda) =>
         prevArenda.map((prevItem) =>
@@ -123,8 +119,7 @@ const Cart = () => {
     };
 
     try {
-      await axios.patch(`${API_URL}cart/update/`, payload, 
-      {headers: {'ngrok-skip-browser-warning': 6024}});
+      await axios.patch(`${API_URL}cart/update/`, payload);
 
       setGoodsItems((prevGoods) =>
         prevGoods.map((prevItem) =>
@@ -156,8 +151,7 @@ const Cart = () => {
     };
 
     try {
-      await axios.patch(`${API_URL}cart/update/`, payload, 
-      {headers: {'ngrok-skip-browser-warning': 6024}});
+      await axios.patch(`${API_URL}cart/update/`, payload);
 
       setArendaItems((prevArenda) =>
         prevArenda.map((prevItem) =>
@@ -181,7 +175,7 @@ const Cart = () => {
     try {
       await axios.delete(`${API_URL}cart/delete/`, {
         data: payload,
-        headers: { "Content-Type": "application/json",  'ngrok-skip-browser-warning': 6024},
+        headers: { "Content-Type": "application/json" },
       });
 
       setGoodsItems((prevGoods) =>
@@ -204,8 +198,7 @@ const Cart = () => {
 
   const handleOrderClick = async () => {
     try {
-      const response = await axios.get(`${API_URL}client/get/${userId}/`,
-      {headers: {'ngrok-skip-browser-warning': 6024}});
+      const response = await axios.get(`${API_URL}client/get/${userId}/`);
       setClientData(response.data);
       setShowOrderForm(true);
     } catch (error) {
@@ -253,16 +246,14 @@ const Cart = () => {
     }
 
     try {
-      await axios.patch(`${API_URL}client/update/`, payloadClient, 
-      {headers: {'ngrok-skip-browser-warning': 6024}});
+      await axios.patch(`${API_URL}client/update/`, payloadClient);
 
     } catch (error) {
       console.error("Ошибка оформления заказа:", error);
     }
 
     try {
-      await axios.post(`${API_URL}order/add/`, payloadOrder, {headers: 
-        {'ngrok-skip-browser-warning': 6024}});
+      await axios.post(`${API_URL}order/add/`, payloadOrder);
       alert("Заказ успешно оформлен!");
       setShowOrderForm(false);
     } catch (error) {

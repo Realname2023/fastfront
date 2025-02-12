@@ -20,8 +20,7 @@ const Goods = () => {
       const endpoint = selectedCity
         ? `${API_URL}catalog/${categoryId}/${selectedCity}`
         : `${API_URL}catalog/${categoryId}/`;
-      const response = await axios.get(endpoint,
-        {headers: {'ngrok-skip-browser-warning': 6024}});
+      const response = await axios.get(endpoint);
       setGoods(response.data);
     } catch (err) {
       setError(err.message);
@@ -32,8 +31,7 @@ const Goods = () => {
 
   const fetchUserCart = async () => {
     try {
-      const response = await axios.get(`${API_URL}cart/get/${userId}/`,
-      {headers: {'ngrok-skip-browser-warning': true}});
+      const response = await axios.get(`${API_URL}cart/get/${userId}/`);
       const userCart = response.data;
 
       // Преобразуем данные в объект, где ключ — good_id
@@ -72,8 +70,7 @@ const Goods = () => {
     };
 
     try {
-      await axios.post(`${API_URL}cart/add/`, payload,
-      {headers: {'ngrok-skip-browser-warning': 6024}});
+      await axios.post(`${API_URL}cart/add/`, payload);
 
       // Обновляем состояние корзины
       setCart((prevCart) => ({
@@ -93,7 +90,7 @@ const Goods = () => {
     try {
       await axios.delete(`${API_URL}cart/delete/`, {
         data: payload,
-        headers: { 'Content-Type': 'application/json', 'ngrok-skip-browser-warning': 6024 },
+        headers: { 'Content-Type': 'application/json' },
       });
 
       setCart((prevCart) => {
