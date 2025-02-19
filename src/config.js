@@ -1,3 +1,3 @@
-const API_URL = "https://6ff8-62-122-1-185.ngrok-free.app/"; // Укажи нужный URL
+const API_URL = "https://crispy-garbanzo-q77qv65qxj46c9r5q-8000.app.github.dev/"; // Укажи нужный URL
 
 export default API_URL;
