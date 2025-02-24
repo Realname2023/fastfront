@@ -31,7 +31,11 @@ const Goods = () => {
 
   const fetchUserCart = async () => {
     try {
-      const response = await axios.get(`${API_URL}cart/get/${userId}/`);
+      let endpoint = `${API_URL}cart/get/${userId}/`;
+
+        // Убираем :8000, если браузер добавил его
+      endpoint = endpoint.replace(":8000", "");
+      const response = await axios.get(endpoint);
       const userCart = response.data;
 
       // Преобразуем данные в объект, где ключ — good_id

@@ -11,7 +11,7 @@ import { TelegramWebAppProvider } from './context/TelegramContext';
 
 createRoot(document.getElementById('root')).render(
   // <TelegramWebAppProvider>
-    <BrowserRouter>
+    <BrowserRouter basename='/fastfront'>
     <Routes>
       <Route path="/" element={<App />} />
       <Route path="/catalog/:categoryId/:selectedCity?" element={<Goods />} />

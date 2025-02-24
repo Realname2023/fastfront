@@ -16,8 +16,11 @@ const Cart = () => {
   // Функция для получения данных корзины
   const fetchCart = async () => {
     try {
-      const response = await axios.get(
-        `${API_URL}cart/get_carts/${userId}/`);
+      let endpoint = `${API_URL}cart/get_carts/${userId}/`;
+
+      // Убираем :8000, если браузер добавил его
+    endpoint = endpoint.replace(":8000", "");
+      const response = await axios.get(endpoint);
 
       const { goods, arenda_goods } = response.data;
       setGoodsItems(goods || []);
