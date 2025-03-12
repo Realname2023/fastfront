@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import API_URL from '../config';
-
+import { tg } from '../App';
 
 const Cart = () => {
   const { state } = useLocation();
@@ -11,15 +11,27 @@ const Cart = () => {
   const [clientData, setClientData] = useState(null);
   const [comment, setComment] = useState("");
   const [showOrderForm, setShowOrderForm] = useState(false);
+  const navigate = useNavigate();
   const userId = state?.userId;
+
+  tg.expand();
+
+  useEffect(() => {
+    tg.BackButton.show();
+    tg.BackButton.onClick(() => {
+      navigate('/');
+    });
+
+    return () => {
+      tg.BackButton.hide();
+    };
+  }, [navigate]);
 
   // Функция для получения данных корзины
   const fetchCart = async () => {
     try {
       let endpoint = `${API_URL}cart/get_carts/${userId}/`;
 
-      // Убираем :8000, если браузер добавил его
-    endpoint = endpoint.replace(":8000", "");
       const response = await axios.get(endpoint);
 
       const { goods, arenda_goods } = response.data;
@@ -257,12 +269,13 @@ const Cart = () => {
 
     try {
       await axios.post(`${API_URL}order/add/`, payloadOrder);
-      alert("Заказ успешно оформлен!");
+      alert("Заказ успешно оформлен! Если остались какие либо вопросы, то напишите оператору");
       setShowOrderForm(false);
     } catch (error) {
       console.error("Ошибка оформления заказа:", error);
     }
     await fetchCart()
+    tg.close()
   };
 
   return (
@@ -427,477 +440,3 @@ const Cart = () => {
 
 export default Cart;
 
-// import React, { useEffect, useState } from 'react';
-// import axios from 'axios';
-// import { useLocation } from 'react-router-dom';
-
-// const Cart = () => {
-//   const { state } = useLocation();
-//   const [goodsItems, setGoodsItems] = useState([]); // Товары для покупки
-//   const [arendaItems, setArendaItems] = useState([]); // Товары для аренды
-//   const [grandTotal, setGrandTotal] = useState(0); // Итоговая сумма
-//   const userId = state?.userId;
-
-//   // Функция для получения данных корзины
-//   const fetchCart = async () => {
-//     try {
-//       const response = await axios.get(`http://127.0.0.1:8000/cart/get_carts/${userId}/`);
-
-//       const { goods, arenda_goods } = response.data;
-//       setGoodsItems(goods || []);
-//       setArendaItems(arenda_goods || []);
-//       calculateGrandTotal(goods || [], arenda_goods || []);
-//     } catch (error) {
-//       console.error('Ошибка загрузки корзины:', error);
-//     }
-//   };
-
-//   // Рассчитать итоговую сумму
-//   const calculateGrandTotal = (goods, arenda) => {
-//     const goodsTotal = goods.reduce((acc, item) => acc + item.total_price, 0);
-//     const arendaTotal = arenda.reduce((acc, item) => acc + item.total_price, 0);
-//     setGrandTotal(goodsTotal + arendaTotal);
-//   };
-
-//   // Обновить товар в корзине
-//   const updateCartItem = async (item, updates) => {
-//     const payload = {
-//       user_id: userId,
-//       good_id: item.good.id,
-//       quantity: updates.quantity || item.quantity,
-//       arenda_time: updates.arenda_time || item.arenda_time,
-//       is_arenda: item.good.is_arenda,
-//       is_delivery: updates.is_delivery ?? item.is_delivery,
-//       is_contract: updates.is_contract ?? item.is_contract,
-//       total_price: updates.total_price,
-//     };
-
-//     try {
-//       await axios.patch('http://127.0.0.1:8000/cart/update/', payload);
-//       fetchCart();
-//     } catch (error) {
-//       console.error('Ошибка обновления корзины:', error);
-//     }
-//   };
-
-//   // Удалить товар из корзины
-//   const handleDeleteCart = async (item) => {
-//     const payload = {
-//       user_id: userId,
-//       good_id: item.good.id,
-//     };
-//     try {
-//       await axios.delete('http://127.0.0.1:8000/cart/delete/', {
-//         data: payload,
-//         headers: { 'Content-Type': 'application/json' },
-//       });
-//       fetchCart();
-//     } catch (error) {
-//       console.error('Ошибка удаления товара из корзины:', error);
-//     }
-//   };
-
-//   useEffect(() => {
-//     fetchCart();
-//   }, []);
-
-//   if (!goodsItems.length && !arendaItems.length) return <p>Корзина пуста</p>;
-
-//   return (
-//     <div>
-//       <h2>Ваша корзина</h2>
-
-//       {/* Блок для покупок */}
-//       {goodsItems.length > 0 && (
-//         <div>
-//           <h3>Покупки</h3>
-//           <table>
-//             <thead>
-//               <tr>
-//                 <th>Название</th>
-//                 <th>Цена</th>
-//                 <th>Количество</th>
-//                 <th>Включить доставку</th>
-//                 <th>Условия доставки</th>
-//                 <th>Сумма</th>
-//                 <th>Удалить</th>
-//               </tr>
-//             </thead>
-//             <tbody>
-//               {goodsItems.map((item) => (
-//                 <tr key={item.good_id}>
-//                   <td>{item.good.name}</td>
-//                   <td>{item.good.price}</td>
-//                   <td>
-//                     <button onClick={() => {
-//                       const quantity = Math.max(item.quantity - 1, 1);
-//                       const total_price = item.good.price * quantity;
-//                       updateCartItem(item, { quantity, total_price });
-//                     }}>-</button>
-//                     <input
-//                       type="number"
-//                       value={item.quantity}
-//                       onChange={(e) => {
-//                         const quantity = Math.max(parseInt(e.target.value, 10), 1);
-//                         const total_price = item.good.price * quantity;
-//                         updateCartItem(item, { quantity, total_price });
-//                       }}
-//                     />
-//                     <button onClick={() => {
-//                       const quantity = item.quantity + 1;
-//                       const total_price = item.good.price * quantity;
-//                       updateCartItem(item, { quantity, total_price });
-//                     }}>+</button>
-//                   </td>
-//                   <td>
-//                     <input
-//                       type="checkbox"
-//                       checked={item.is_delivery}
-//                       onChange={(e) => {
-//                         const is_delivery = e.target.checked;
-//                         const total_price = is_delivery
-//                           ? item.good.price + item.good.delivery_price
-//                           : item.good.price;
-//                         updateCartItem(item, { is_delivery, total_price });
-//                       }}
-//                     />
-//                   </td>
-//                   <td>{item.good.delivery_terms}</td>
-//                   <td>{item.total_price}</td>
-//                   <td><button onClick={() => handleDeleteCart(item)}>Удалить</button></td>
-//                 </tr>
-//               ))}
-//             </tbody>
-//           </table>
-//         </div>
-//       )}
-
-//       {/* Блок для аренды */}
-//       {arendaItems.length > 0 && (
-//         <div>
-//           <h3>Аренда</h3>
-//           <table>
-//             <thead>
-//               <tr>
-//                 <th>Название</th>
-//                 <th>Цена за единицу</th>
-//                 <th>Количество</th>
-//                 <th>Время аренды (мес.)</th>
-//                 <th>Заключить договор</th>
-//                 <th>Условия договора</th>
-//                 <th>Сумма</th>
-//                 <th>Удалить</th>
-//               </tr>
-//             </thead>
-//             <tbody>
-//               {arendaItems.map((item) => (
-//                 <tr key={item.good_id}>
-//                   <td>{item.good.name}</td>
-//                   <td>{item.good.price}</td>
-//                   <td>
-//                     <button onClick={() => {
-//                       const quantity = Math.max(item.quantity - 1, 1);
-//                       const total_price = item.good.price * quantity * item.arenda_time;
-//                       updateCartItem(item, { quantity, total_price });
-//                     }}>-</button>
-//                     <input
-//                       type="number"
-//                       value={item.quantity}
-//                       onChange={(e) => {
-//                         const quantity = Math.max(parseInt(e.target.value, 10), 1);
-//                         const total_price = item.good.price * quantity * item.arenda_time;
-//                         updateCartItem(item, { quantity, total_price });
-//                       }}
-//                     />
-//                     <button onClick={() => {
-//                       const quantity = item.quantity + 1;
-//                       const total_price = item.good.price * quantity * item.arenda_time;
-//                       updateCartItem(item, { quantity, total_price });
-//                     }}>+</button>
-//                   </td>
-//                   <td>
-//                     <button onClick={() => {
-//                       const arenda_time = Math.max(item.arenda_time - 1, 1);
-//                       const total_price = item.good.price * item.quantity * arenda_time;
-//                       updateCartItem(item, { arenda_time, total_price });
-//                     }}>-</button>
-//                     <input
-//                       type="number"
-//                       value={item.arenda_time}
-//                       onChange={(e) => {
-//                         const arenda_time = Math.max(parseInt(e.target.value, 10), 1);
-//                         const total_price = item.good.price * item.quantity * arenda_time;
-//                         updateCartItem(item, { arenda_time, total_price });
-//                       }}
-//                     />
-//                     <button onClick={() => {
-//                       const arenda_time = item.arenda_time + 1;
-//                       const total_price = item.good.price * item.quantity * arenda_time;
-//                       updateCartItem(item, { arenda_time, total_price });
-//                     }}>+</button>
-//                   </td>
-//                   <td>
-//                     <input
-//                       type="checkbox"
-//                       checked={item.is_contract}
-//                       onChange={(e) => {
-//                         const is_contract = e.target.checked;
-//                         const total_price = is_contract
-//                           ? item.good.price * item.quantity * item.arenda_time - item.good.arenda_contract
-//                           : item.good.price * item.quantity * item.arenda_time;
-//                         updateCartItem(item, { is_contract, total_price });
-//                       }}
-//                     />
-//                   </td>
-//                   <td>{item.good.arenda_terms}</td>
-//                   <td>{item.total_price}</td>
-//                   <td><button onClick={() => handleDeleteCart(item)}>Удалить</button></td>
-//                 </tr>
-//               ))}
-//             </tbody>
-//           </table>
-//         </div>
-//       )}
-
-//       <div>
-//         <h3>Итоговая сумма: {grandTotal} ₽</h3>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Cart;
-
-// import React, { useEffect, useState } from 'react';
-// import axios from 'axios';
-// import { useLocation } from 'react-router-dom';
-
-// const Cart = () => {
-//   const { state } = useLocation();
-//   const [goodsItems, setGoodsItems] = useState([]); // Товары для покупки
-//   const [arendaItems, setArendaItems] = useState([]); // Товары для аренды
-//   const userId = state?.userId;
-
-//   // Функция для получения данных корзины
-//   const fetchCart = async () => {
-//     try {
-//       const response = await axios.get(`http://127.0.0.1:8000/cart/get_carts/${userId}/`);
-      
-//       // Разделяем товары на покупки и аренду
-//       const { goods, arenda_goods } = response.data;
-//       setGoodsItems(goods || []);
-//       setArendaItems(arenda_goods || []);
-//     } catch (error) {
-//       console.error('Ошибка загрузки корзины:', error);
-//     }
-//   };
-
-//   useEffect(() => {
-//     fetchCart();
-//   }, []);
-
-//   if (!goodsItems.length && !arendaItems.length) return <p>Корзина пуста</p>;
-
-//   return (
-//     <div>
-//       <h2>Ваша корзина</h2>
-
-//       {/* Блок для покупок */}
-//       {goodsItems.length > 0 && (
-//         <div>
-//           <h3>Покупки</h3>
-//           <table>
-//             <thead>
-//               <tr>
-//                 <th>Название</th>
-//                 <th>Цена</th>
-//                 <th>Количество</th>
-//                 <th>Включить доставку</th>
-//                 <th>Условия доставки</th>
-//                 <th>Сумма</th>
-//                 <th>Удалить</th>
-//               </tr>
-//             </thead>
-//             <tbody>
-//               {goodsItems.map((item) => (
-//                 <tr key={item.good_id}>
-//                   <td>{item.good.name}</td>
-//                   <td>{item.good.price}</td>
-//                   <td>{item.quantity}</td>
-//                   <td><input type="checkbox"></input></td>
-//                   <td>{item.good.delivery_terms}</td>
-//                   <td>{item.total_price}</td>
-//                   <td><button>Удалить</button></td>
-//                 </tr>
-//               ))}
-//             </tbody>
-//           </table>
-//         </div>
-//       )}
-
-//       {/* Блок для аренды */}
-//       {arendaItems.length > 0 && (
-//         <div>
-//           <h3>Аренда</h3>
-//           <table>
-//             <thead>
-//               <tr>
-//                 <th>Название</th>
-//                 <th>Цена за единицу</th>
-//                 <th>Количество</th>
-//                 <th>Время аренды (мес.)</th>
-//                 <th>Заключить договор</th>
-//                 <th>Условия договора</th>
-//                 <th>Сумма</th>
-//                 <th>Удалить</th>
-//               </tr>
-//             </thead>
-//             <tbody>
-//               {arendaItems.map((item) => (
-//                 <tr key={item.good_id}>
-//                   <td>{item.good.name}</td>
-//                   <td>{item.good.price}</td>
-//                   <td>{item.quantity}</td>
-//                   <td>{item.arenda_time}</td>
-//                   <td><input type="checkbox"></input></td>
-//                   <td>{item.good.arenda_terms}</td>
-//                   <td>{item.total_price}</td>
-//                   <td><button>Удалить</button></td>
-//                 </tr>
-//               ))}
-//             </tbody>
-//           </table>
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default Cart;
-
-// import React, { useEffect, useState } from 'react';
-// import axios from 'axios';
-// import { useLocation } from 'react-router-dom';
-
-// const Cart = () => {
-//   const { state } = useLocation();
-//   const [cartItems, setCartItems] = useState([]);
-//   const userId = state?.userId;
-
-//   const fetchCart = async () => {
-//     try {
-//       const response = await axios.get(`http://127.0.0.1:8000/cart/get/${userId}/`);
-//       setCartItems(response.data);
-//     } catch (error) {
-//       console.error('Ошибка загрузки корзины:', error);
-//     }
-//   };
-
-//   useEffect(() => {
-//     fetchCart();
-//   }, []);
-
-//   if (!cartItems.length) return <p>Корзина пуста</p>;
-
-//   return (
-//     <div>
-//       <h2>Ваша корзина</h2>
-//       <table>
-//         <thead>
-//           <tr>
-//             <th>Название</th>
-//             <th>Цена</th>
-//             <th>Количество</th>
-//             {/* <th>Доставка</th> */}
-//             <th>Сумма</th>
-//           </tr>
-//         </thead>
-//         <tbody>
-//         {cartItems.map((item) => (
-//           <tr key={item.good_id}>
-//             <td>{item.good["name"]}</td>
-//             <td>{item.good["price"]}</td>
-//             <td>{item.quantity}</td>
-//             <td>{item.total_price}</td>
-//           </tr>
-//         ))}
-//         </tbody>
-//       </table>
-//     </div>
-//   );
-// };
-
-// export default Cart;
-// import React, { useState } from 'react';
-// import { useLocation, useNavigate } from 'react-router-dom';
-
-
-// const Cart = () => {
-//   const { state } = useLocation();
-//   const [cart, setCart] = useState(state.cart || {});
-//   const navigate = useNavigate();
-
-//   const handleChangeQuantity = (id, quantity) => {
-//     if (quantity <= 0) {
-//       const updatedCart = { ...cart };
-//       delete updatedCart[id];
-//       setCart(updatedCart);
-//     } else {
-//       setCart({ ...cart, [id]: quantity });
-//     }
-//   };
-
-//   const handleRemoveItem = (id) => {
-//     const updatedCart = { ...cart };
-//     delete updatedCart[id];
-//     setCart(updatedCart);
-//   };
-
-//   const totalPrice = Object.keys(cart).reduce(
-//     (sum, id) => sum + cart[id] * goods.find((good) => good.id === parseInt(id)).price,
-//     0
-//   );
-
-//   return (
-//     <div>
-//       <h1>Ваш заказ</h1>
-//       <table>
-//         <thead>
-//           <tr>
-//             <th>Название</th>
-//             <th>Количество</th>
-//             <th>Цена</th>
-//             <th>Действия</th>
-//           </tr>
-//         </thead>
-//         <tbody>
-//           {Object.keys(cart).map((id) => {
-//             const good = goods.find((item) => item.id === parseInt(id));
-//             return (
-//               <tr key={id}>
-//                 <td>{good.name}</td>
-//                 <td>
-//                   <button onClick={() => handleChangeQuantity(id, cart[id] - 1)}>-</button>
-//                   <input
-//                     type="number"
-//                     value={cart[id]}
-//                     onChange={(e) => handleChangeQuantity(id, Math.max(0, parseInt(e.target.value) || 0))}
-//                   />
-//                   <button onClick={() => handleChangeQuantity(id, cart[id] + 1)}>+</button>
-//                 </td>
-//                 <td>{good.price * cart[id]}</td>
-//                 <td>
-//                   <button onClick={() => handleRemoveItem(id)}>Удалить</button>
-//                 </td>
-//               </tr>
-//             );
-//           })}
-//         </tbody>
-//       </table>
-//       <h3>Итоговая цена: {totalPrice}</h3>
-//       <button onClick={() => navigate(-1)}>Назад</button>
-//     </div>
-//   );
-// };
-
-// export default Cart;

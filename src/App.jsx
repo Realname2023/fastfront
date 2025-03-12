@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import API_URL from './config';
 
 // const API_URL = process.env.REACT_APP_API_URL
+export const tg = window.Telegram.WebApp;
+tg.expand();
 
 const App = () => {
 
@@ -12,7 +14,6 @@ const App = () => {
     const [selectedCity, setSelectedCity] = useState(null); // Состояние для выбранного города
     const [error, setError] = useState(null); // Состояние для хранения ошибок
     const [loading, setLoading] = useState(true); // Состояние для отображения загрузки
-    
 
     // Асинхронная функция для получения данных
     const fetchDataCategories = async () => {
@@ -82,4 +83,4 @@ const App = () => {
   )
 }
 
-export default App
+export default App;

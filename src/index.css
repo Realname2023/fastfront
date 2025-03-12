@@ -2,6 +2,15 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
 }
 
+
+body {
+  --bg-color: var(--tg-theme-bg-color);
+  background-color: var(--bg-color);
+  color: var(--tg-theme-text-color);
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
+  color-scheme: var(--tg-color-scheme);
+}
