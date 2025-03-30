@@ -156,7 +156,7 @@ const Goods = () => {
 
   useEffect(() => {
     if (userId) {
-      tg.MainButton.setText('🛒 Посмотреть заказ');
+      tg.MainButton.setText('🛒 Корзина');
       tg.MainButton.show();
       tg.MainButton.onClick(() => {
         navigate('/cart', { state: { userId } });
