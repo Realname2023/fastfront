@@ -187,6 +187,7 @@ const Goods = () => {
                 </p>
                 <p>{good.name}</p>
                 <p>{good.unit}</p>
+                <button onClick={() => alert(good.description)}>Описание</button>
                 <p>Цена: {good.price}</p>
                 <p>Город: {good.city['name']}</p>
                 <p>
