@@ -48,8 +48,10 @@ const Cart = () => {
 
   // Обработка изменения количества товара
   const handleQuantityChange = async (item, quantity) => {
-    const updatedTotalPrice =
-      item.good.price * quantity * (item.arenda_time || 1);
+    const updatedTotalPrice = 
+    (item.good.price + (item.is_delivery ? item.good.delivery_price : 0)- (item.is_contract ? item.good.arenda_contract : 0)) *
+    quantity *(item.arenda_time || 1);
+      // item.good.price * quantity * (item.arenda_time || 1);
 
     const payload = {
       user_id: userId,
@@ -87,7 +89,9 @@ const Cart = () => {
 
   // Обработка изменения времени аренды
   const handleArendaTimeChange = async (item, arendaTime) => {
-    const updatedTotalPrice = item.good.price * item.quantity * arendaTime;
+    const updatedTotalPrice = 
+    (item.good.price - (item.is_contract ? item.good.arenda_contract : 0)) *item.quantity *arendaTime;
+    // item.good.price * item.quantity * arendaTime;
 
     const payload = {
       user_id: userId,
