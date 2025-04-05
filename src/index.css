@@ -13,4 +13,21 @@ body {
   margin: 0;
   padding: 0;
   color-scheme: var(--tg-color-scheme);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+  /* Адаптация для планшетов */
+  @media (max-width: 768px) {
+    .body {
+      flex: 1 1 calc(50% - 10px); /* На планшетах ширина колонок 50% */
+    }
+  }
+  
+  /* Адаптация для телефонов */
+  @media (max-width: 480px) {
+    .body {
+      flex: 1 1 100%; /* На телефонах каждая колонка занимает 100% */
+    }
+  }

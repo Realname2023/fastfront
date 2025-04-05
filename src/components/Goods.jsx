@@ -182,14 +182,15 @@ const Goods = () => {
                   <img
                     src={good.photo}
                     alt={good.name}
-                    style={{ width: '100px', height: 'auto' }}
+                    style={{ width: '200px', height: 'auto' }}
                   />
                 </p>
                 <p>{good.name}</p>
-                <p>{good.unit}</p>
-                <button onClick={() => alert(good.description)}>Описание</button>
+                {/* <p>{good.unit}</p> */}
+                <p><button onClick={() => alert(good.description)}>Описание</button></p>
                 <p>Цена: {good.price}</p>
-                <p>Город: {good.city['name']}</p>
+                <p>Филиал: {good.city['name']}</p>
+                <p>Количество:</p>
                 <p>
                   {cart[good.id]?.inCart ? (
                     <button onClick={() => handleDeleteCart(good)}>
@@ -198,6 +199,7 @@ const Goods = () => {
                     </button>
                   ) : (
                     <div>
+                      
                       <button
                         onClick={() =>
                           handleChangeQuantity(
@@ -265,12 +267,12 @@ const Goods = () => {
                           </button>
                         </div>
                       )}
-                      <button
+                      <p><button
                         className="add-to-order"
                         onClick={() => handleAddToCart(good)}
                       >
-                        Добавить в заказ
-                      </button>
+                        Добавить в корзину
+                      </button></p>
                     </div>
                   )}
                 </p>

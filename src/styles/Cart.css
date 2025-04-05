@@ -1,0 +1,108 @@
+/* body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+  } */
+  
+  .container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 15px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2, h3 {
+    text-align: center;
+  }
+  
+  .purch-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+    border: 1px solid #2ecf0e;
+  }
+ 
+  .purch-table tr {
+    padding: 10px;
+    text-align: center;
+  }
+
+  .purch-table td {
+    padding: 10px;
+    text-align: center;
+  }
+
+  .arenda-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+    border: 1px solid #2ecf0e;
+  }
+
+  .arenda-table tr {
+    padding: 10px;
+    text-align: center;
+  }
+
+  .arenda-table td {
+    padding: 10px;
+    text-align: center;
+  }
+  
+  input[type="number"] {
+    width: 50px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  button {
+    background: #0088cc;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  button:hover {
+    background: #005f99;
+  }
+  
+  input[type="checkbox"] {
+    transform: scale(1.2);
+  }
+  
+  .order-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .order-form input,
+  .order-form textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+  }
+  
+  .order-form button {
+    background: #28a745;
+  }
+  
+  .order-form button:hover {
+    background: #218838;
+  }
+  
+  .total {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 15px;
+  }
+  

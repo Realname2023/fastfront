@@ -25,6 +25,17 @@
     max-width: 100%;
     height: auto;
   }
+
+  .responsive-table button {
+    background: #0088cc;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+}
   
   /* Адаптация для планшетов */
   @media (max-width: 768px) {

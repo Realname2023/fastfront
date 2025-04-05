@@ -1,3 +1,4 @@
+import '../styles/Cart.css';
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -290,8 +291,9 @@ const Cart = () => {
       {goodsItems.length > 0 && (
         <div>
           <h3>Покупки</h3>
-          <table>
-            <thead>
+          {goodsItems.map((item) => (
+          <table className='purch-table' key={item.good.id}>
+            {/* <thead>
               <tr>
                 <th>Название</th>
                 <th>Цена</th>
@@ -301,13 +303,17 @@ const Cart = () => {
                 <th>Сумма</th>
                 <th>Удалить</th>
               </tr>
-            </thead>
+            </thead> */}
             <tbody>
-              {goodsItems.map((item) => (
-                <tr key={item.good.id}>
-                  <td>{item.good.name}</td>
-                  <td>{item.good.price}</td>
-                  <td>
+              
+                <tr >
+                  {item.good.name}
+                </tr >
+                <tr >
+                  Цена: {item.good.price}
+                </tr >
+                <tr >
+                  Количество:  
                     <button onClick={() => handleQuantityChange(item, item.quantity - 1)}>-</button>
                     <input
                       type="number"
@@ -315,23 +321,26 @@ const Cart = () => {
                       onChange={(e) => handleQuantityChange(item, Number(e.target.value))}
                     />
                     <button onClick={() => handleQuantityChange(item, item.quantity + 1)}>+</button>
-                  </td>
-                  <td>
+                </tr >
+                <tr >
+                  <td>Включить доставку 
                     <input
                       type="checkbox"
                       checked={item.is_delivery}
                       onChange={(e) => handleDeliveryToggle(item, e.target.checked)}
                     />
                   </td>
-                  <td>{item.good.delivery_terms}</td>
-                  <td>{item.total_price}</td>
+                  <td><button onClick={() => alert(item.good.delivery_terms)}>Условия доставки</button></td>
+                </tr >
+                <tr >
+                  <td>Сумма: {item.total_price}</td>
                   <td>
                     <button onClick={() => handleDeleteCart(item)}>Удалить</button>
                   </td>
                 </tr>
-              ))}
+              
             </tbody>
-          </table>
+          </table>))}
         </div>
       )}
 
@@ -339,8 +348,9 @@ const Cart = () => {
       {arendaItems.length > 0 && (
         <div>
           <h3>Аренда</h3>
-          <table>
-            <thead>
+          {arendaItems.map((item) => (
+          <table className='arenda-table' key={item.good.id}>
+            {/* <thead>
               <tr>
                 <th>Название</th>
                 <th>Цена за единицу</th>
@@ -351,13 +361,17 @@ const Cart = () => {
                 <th>Сумма</th>
                 <th>Удалить</th>
               </tr>
-            </thead>
+            </thead> */}
             <tbody>
-              {arendaItems.map((item) => (
-                <tr key={item.good.id}>
-                  <td>{item.good.name}</td>
-                  <td>{item.good.price}</td>
-                  <td>
+              
+                <tr>
+                  {item.good.name}
+                </tr>
+                <tr>
+                  Цена: {item.good.price}
+                </tr>
+                <tr>
+                  Количество:  
                     <button onClick={() => handleQuantityChange(item, item.quantity - 1)}>-</button>
                     <input
                       type="number"
@@ -365,8 +379,10 @@ const Cart = () => {
                       onChange={(e) => handleQuantityChange(item, Number(e.target.value))}
                     />
                     <button onClick={() => handleQuantityChange(item, item.quantity + 1)}>+</button>
-                  </td>
-                  <td>
+                  
+                </tr>
+                <tr>
+                  Время аренды:  
                     <button onClick={() => handleArendaTimeChange(item, item.arenda_time - 1)}>-</button>
                     <input
                       type="number"
@@ -376,23 +392,27 @@ const Cart = () => {
                       }
                     />
                     <button onClick={() => handleArendaTimeChange(item, item.arenda_time + 1)}>+</button>
-                  </td>
-                  <td>
+                  
+                </tr>
+                <tr>
+                  <td>Заключить договор: 
                     <input
                       type="checkbox"
                       checked={item.is_contract}
                       onChange={(e) => handleContractToggle(item, e.target.checked)}
                     />
                   </td>
-                  <td>{item.good.arenda_terms}</td>
-                  <td>{item.total_price}</td>
+                  <td><button onClick={() => alert(item.good.arenda_terms)}>Условия договора</button></td>
+                </tr>
+                <tr>
+                  <td>Сумма: {item.total_price}</td>
                   <td>
                     <button onClick={() => handleDeleteCart(item)}>Удалить</button>
                   </td>
                 </tr>
-              ))}
+              
             </tbody>
-          </table>
+          </table>))}
         </div>
       )}
 
@@ -406,36 +426,43 @@ const Cart = () => {
       {showOrderForm && clientData && (
         <div>
           <h3>Заполните данные</h3>
+          <p>Название организации: 
           <input
             type="text"
             placeholder="Название организации"
             value={clientData.org_name || ""}
             onChange={(e) => setClientData({ ...clientData, org_name: e.target.value })}
-          />
+          /></p>
+          <p>Город: 
           <input
             type="text"
             placeholder="Город"
             value={clientData.client_city || ""}
             onChange={(e) => setClientData({ ...clientData, client_city: e.target.value })}
-          />
+          /></p>
+          <p>Адрес:  
           <input
             type="text"
             placeholder="Адрес"
             value={clientData.address || ""}
             onChange={(e) => setClientData({ ...clientData, address: e.target.value })}
-          />
+          /></p>
+          <p>Телефон: 
           <input
             type="text"
             placeholder="Телефон"
             value={clientData.phone || ""}
             onChange={(e) => setClientData({ ...clientData, phone: e.target.value })}
-          />
+          /></p>
+          <p>
           <textarea
             placeholder="Комментарий к заказу"
             value={comment}
             onChange={(e) => setComment(e.target.value)}
-          />
+          /></p>
+          <p>
           <button onClick={handlePlaceOrder}>Заказать</button>
+          </p>
         </div>
       )}
     </div>

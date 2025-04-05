@@ -1,3 +1,4 @@
+import './styles/App.css';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -63,13 +64,14 @@ const App = () => {
         <div>
             {categories.map(category => (
                 <div key={category.id}>
-                    <h3>{category.name}</h3>
-                    <img 
+                    <h3 onClick={() => openModal(category.id)}>{category.name}</h3>
+                    <p><img 
                         src={category.photo} 
                         alt={category.name} 
                         style={{ width: '200px', height: 'auto', cursor: 'pointer' }}
                         onClick={() => openModal(category.id)} 
-                    />
+                    /></p>
+                    <button className='cat-button' onClick={() => openModal(category.id)}>Купить</button>
                 </div>
             ))}
 
