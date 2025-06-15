@@ -9,7 +9,8 @@ body {
   --bg-color: var(--tg-theme-bg-color);
   background-color: var(--bg-color);
   color: var(--tg-theme-text-color);
-  font-size: 14px;
+  /* font-size: 14px; */
+  align-items: center;
   margin: 0;
   padding: 0;
   color-scheme: var(--tg-color-scheme);
@@ -18,16 +19,24 @@ body {
   align-items: center;
 }
 
+h2, h3 {
+  text-align: center;
+}
+
   /* Адаптация для планшетов */
   @media (max-width: 768px) {
     .body {
-      flex: 1 1 calc(50% - 10px); /* На планшетах ширина колонок 50% */
+      /* width: 700px; */
+      flex: 1 1 calc(50% - 10px); 
+      /* На планшетах ширина колонок 50% */
     }
   }
   
   /* Адаптация для телефонов */
   @media (max-width: 480px) {
     .body {
-      flex: 1 1 100%; /* На телефонах каждая колонка занимает 100% */
+      /* width: 480px; */
+      flex: 1 1 100%; 
+      /* На телефонах каждая колонка занимает 100% */
     }
   }

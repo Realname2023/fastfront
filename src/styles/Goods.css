@@ -1,55 +1,64 @@
 /* Стили для адаптивной таблицы */
-.responsive-table {
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-    border-collapse: collapse;
-    margin: 0 auto;
-  }
-  
-  .responsive-table tr {
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-  }
-  
-  .responsive-table td {
-    flex: 1 1 calc(33.33% - 10px); /* Устанавливаем ширину 33% с учетом отступов */
-    margin: 5px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    text-align: center;
-  }
-  
-  .responsive-table img {
-    max-width: 100%;
-    height: auto;
-  }
 
-  .responsive-table button {
-    background: #0088cc;
+.good {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 5px;
+  margin-left: 5px;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.good img {
+  width: 320px;
+  height: auto;
+  border-radius: 10px;
+  cursor: 'pointer'
+}
+
+.good div {
+  text-align: center;
+}
+
+.good button {
+    background: #008000;
     color: white;
     border: none;
     padding: 10px 15px;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 24px;
     transition: background 0.3s;
 }
-  
-  /* Адаптация для планшетов */
-  @media (max-width: 768px) {
-    .responsive-table td {
-      flex: 1 1 calc(50% - 10px); /* На планшетах ширина колонок 50% */
-    }
-  }
-  
-  /* Адаптация для телефонов */
-  @media (max-width: 480px) {
-    .responsive-table td {
-      flex: 1 1 100%; /* На телефонах каждая колонка занимает 100% */
-    }
-  }
+
+.good input[type="number"] {
+  background: white;
+  width: 50px;
+  padding: 10px 15px;
+  font-size: 24px;
+  text-align: 'center';
+  color: black;
+}
+
+.good button, .good input[type="number"] {
+  display: inline-block;
+}
+
+#good-name {
+  font-size: 28px;
+}
+
+#good-price {
+  font-size: 24px;
+}
+
+.good-quantity {
+  font-size: 18px;
+}
   
   .modal {
     position: fixed;

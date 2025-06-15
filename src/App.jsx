@@ -63,82 +63,111 @@ const App = () => {
     return (
         <div>
             {categories.map(category => (
-                <div key={category.id}>
-                    <h3 onClick={() => openModal(category.id)}>{category.name}</h3>
-                    <p><img 
+                <div className='category' key={category.id}>
+                    <img 
                         src={category.photo} 
                         alt={category.name} 
-                        style={{ width: '200px', height: 'auto', cursor: 'pointer' }}
                         onClick={() => openModal(category.id)} 
-                    /></p>
-                    <button className='cat-button' onClick={() => openModal(category.id)}>Купить</button>
+                    />
+                    <div onClick={() => openModal(category.id)}>{category.name}</div>
+                    <button className='cat-button' onClick={() => openModal(category.id)}>Заказать</button>
                 </div>
             ))}
-
-            {/* Модальное окно выбора города */}
             {isModalOpen && (
-                <div style={modalStyles.overlay}>
-                    <div style={modalStyles.modal}>
-                        <p>Выберите город:</p>
-                        {cities
-                            .filter(city => city.id !== 5) // Исключаем город с id = 5
-                            .map(city => (
-                                <label key={city.id} style={{ display: 'block', cursor: 'pointer' }}>
-                                    <input 
-                                        type="radio" 
-                                        name="city" 
-                                        value={city.id} 
-                                        checked={selectedCity === String(city.id)} 
-                                        onChange={(e) => setSelectedCity(e.target.value)}
-                                    />
-                                    {city.name}
-                                </label>
-                            ))
-                        }
-                        {/* <h2>Выберите город</h2>
-                        <select 
-                            value={selectedCity} 
+            <div className="modal">
+                <div className="modal-content">
+                <button className="modal-close" onClick={closeModal}>×</button>
+
+                <p>Выберите город:</p>
+                <div className="city-list">
+                    {cities
+                    .filter(city => city.id !== 5)
+                    .map(city => (
+                        <label key={city.id}>
+                        <input
+                            type="radio"
+                            name="city"
+                            value={city.id}
+                            checked={selectedCity === String(city.id)}
                             onChange={(e) => setSelectedCity(e.target.value)}
-                        >
-                            <option value="" disabled>Выберите город</option>
-                            {cities.filter(city => city.id !== 5).map(city => (
-                                <option key={city.id} value={city.id}>{city.name}</option>
-                            ))}
-                        </select> */}
-                        <div style={{ marginTop: '10px' }}>
-                            <button onClick={handleConfirmCity} disabled={!selectedCity}>OK</button>
-                            <button onClick={closeModal} style={{ marginLeft: '10px' }}>Закрыть</button>
-                        </div>
-                    </div>
+                        />
+                        {city.name}
+                        </label>
+                    ))}
                 </div>
+
+                <button onClick={handleConfirmCity} disabled={!selectedCity}>OK</button>
+                </div>
+            </div>
             )}
         </div>
     );
 };
 
-// Стили для модального окна
-const modalStyles = {
-    overlay: {
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100vw',
-        height: '100vh',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    modal: {
-        backgroundColor: '#008000',
-        padding: '20px',
-        borderRadius: '10px',
-        textAlign: 'center',
-        width: '300px',
-    }
-};
-
 export default App;
+// {/* </table> */}
+//             {/* Модальное окно выбора города */}
+//             {/* {isModalOpen && (
+//                 <div className='modal'>
+//                     <div>
+//                         <p>Выберите город:</p>
+//                         {cities
+//                             .filter(city => city.id !== 5) // Исключаем город с id = 5
+//                             .map(city => (
+//                                 <label key={city.id}>
+//                                     <input 
+//                                         type="radio" 
+//                                         name="city" 
+//                                         value={city.id} 
+//                                         checked={selectedCity === String(city.id)} 
+//                                         onChange={(e) => setSelectedCity(e.target.value)}
+//                                     />
+//                                     {city.name}
+//                                 </label>
+//                             ))
+//                         }
+                        
+//                         <button onClick={handleConfirmCity} disabled={!selectedCity}>OK</button>
+//                         <button onClick={closeModal}>Закрыть</button>
+                        
+//                     </div>
+//                 </div>
+//             )} */}
+// {/* </div> */}
+// {/* <h2>Выберите город</h2>
+//                         <select 
+//                             value={selectedCity} 
+//                             onChange={(e) => setSelectedCity(e.target.value)}
+//                         >
+//                             <option value="" disabled>Выберите город</option>
+//                             {cities.filter(city => city.id !== 5).map(city => (
+//                                 <option key={city.id} value={city.id}>{city.name}</option>
+//                             ))}
+//                         </select> */}
+//                         {/* <div> */}
+
+// Стили для модального окна
+// const modalStyles = {
+//     overlay: {
+//         position: 'fixed',
+//         top: 0,
+//         left: 0,
+//         width: '100vw',
+//         height: '100vh',
+//         backgroundColor: 'rgba(0, 0, 0, 0.5)',
+//         display: 'flex',
+//         justifyContent: 'center',
+//         alignItems: 'center',
+//     },
+//     modal: {
+//         backgroundColor: '#008000',
+//         padding: '20px',
+//         borderRadius: '10px',
+//         textAlign: 'center',
+//         width: '300px',
+//     }
+// };
+
 
 // import axios from 'axios';
 // import React, { useEffect, useState } from 'react';

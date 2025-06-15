@@ -290,55 +290,48 @@ const Cart = () => {
       {/* Блок для покупок */}
       {goodsItems.length > 0 && (
         <div>
-          <h3>Покупки</h3>
+          {/* <h3>Товары</h3> */}
           {goodsItems.map((item) => (
-          <table className='purch-table' key={item.good.id}>
-            {/* <thead>
+          <table className='cart' key={item.good.id}>
+            <thead>
               <tr>
-                <th>Название</th>
+                <th colSpan={3} className='itemname'>
+                  <div className="itemname-wrapper">
+                    {item.good.name}
+                    <button className="closebtn" onClick={() => handleDeleteCart(item)}>×</button>
+                  </div>
+		            </th>
+	            </tr>
+	            <tr>
                 <th>Цена</th>
                 <th>Количество</th>
-                <th>Включить доставку</th>
-                <th>Условия доставки</th>
                 <th>Сумма</th>
-                <th>Удалить</th>
               </tr>
-            </thead> */}
+            </thead>
             <tbody>
-              
-                <tr >
-                  {item.good.name}
-                </tr >
-                <tr >
-                  Цена: {item.good.price}
-                </tr >
-                <tr >
-                  Количество:  
-                    <button onClick={() => handleQuantityChange(item, item.quantity - 1)}>-</button>
-                    <input
-                      type="number"
-                      value={item.quantity}
-                      onChange={(e) => handleQuantityChange(item, Number(e.target.value))}
-                    />
-                    <button onClick={() => handleQuantityChange(item, item.quantity + 1)}>+</button>
-                </tr >
-                <tr >
-                  <td>Включить доставку 
-                    <input
-                      type="checkbox"
-                      checked={item.is_delivery}
-                      onChange={(e) => handleDeliveryToggle(item, e.target.checked)}
-                    />
-                  </td>
-                  <td><button onClick={() => alert(item.good.delivery_terms)}>Условия доставки</button></td>
-                </tr >
-                <tr >
-                  <td>Сумма: {item.total_price}</td>
-                  <td>
-                    <button onClick={() => handleDeleteCart(item)}>Удалить</button>
-                  </td>
-                </tr>
-              
+              <tr>
+                <td>{item.good.price}</td>
+                <td>
+                  <button onClick={() => handleQuantityChange(item, item.quantity - 1)}>-</button>
+                <input className='changenum'
+                  type="number"
+                  value={item.quantity}
+                  onChange={(e) => handleQuantityChange(item, Number(e.target.value))}
+                />
+                <button onClick={() => handleQuantityChange(item, item.quantity + 1)}>+</button>
+                </td>
+                <td>{item.total_price}</td>
+              </tr >
+              <tr >
+                <td colSpan={3}>Включить доставку 
+                  <input
+                    type="checkbox"
+                    checked={item.is_delivery}
+                    onChange={(e) => handleDeliveryToggle(item, e.target.checked)}
+                  />
+                  <button className='therm' onClick={() => alert(item.good.delivery_terms)}>Условия доставки</button>
+                </td>
+              </tr >
             </tbody>
           </table>))}
         </div>
@@ -347,70 +340,60 @@ const Cart = () => {
       {/* Блок для аренды */}
       {arendaItems.length > 0 && (
         <div>
-          <h3>Аренда</h3>
+          {/* <h3>Аренда</h3> */}
           {arendaItems.map((item) => (
-          <table className='arenda-table' key={item.good.id}>
-            {/* <thead>
+          <table className='cart' key={item.good.id}>
+            <thead>
               <tr>
-                <th>Название</th>
-                <th>Цена за единицу</th>
-                <th>Количество</th>
-                <th>Время аренды (мес.)</th>
-                <th>Заключить договор</th>
-                <th>Условия договора</th>
-                <th>Сумма</th>
-                <th>Удалить</th>
-              </tr>
-            </thead> */}
-            <tbody>
-              
-                <tr>
+                <th colSpan={4} className='itemname'>
+                <div className="itemname-wrapper">
                   {item.good.name}
-                </tr>
-                <tr>
-                  Цена: {item.good.price}
-                </tr>
-                <tr>
-                  Количество:  
-                    <button onClick={() => handleQuantityChange(item, item.quantity - 1)}>-</button>
-                    <input
-                      type="number"
-                      value={item.quantity}
-                      onChange={(e) => handleQuantityChange(item, Number(e.target.value))}
-                    />
-                    <button onClick={() => handleQuantityChange(item, item.quantity + 1)}>+</button>
-                  
-                </tr>
-                <tr>
-                  Время аренды:  
-                    <button onClick={() => handleArendaTimeChange(item, item.arenda_time - 1)}>-</button>
-                    <input
-                      type="number"
-                      value={item.arenda_time}
-                      onChange={(e) =>
-                        handleArendaTimeChange(item, Number(e.target.value))
-                      }
-                    />
-                    <button onClick={() => handleArendaTimeChange(item, item.arenda_time + 1)}>+</button>
-                  
-                </tr>
-                <tr>
-                  <td>Заключить договор: 
-                    <input
-                      type="checkbox"
-                      checked={item.is_contract}
-                      onChange={(e) => handleContractToggle(item, e.target.checked)}
-                    />
-                  </td>
-                  <td><button onClick={() => alert(item.good.arenda_terms)}>Условия договора</button></td>
-                </tr>
-                <tr>
-                  <td>Сумма: {item.total_price}</td>
-                  <td>
-                    <button onClick={() => handleDeleteCart(item)}>Удалить</button>
-                  </td>
-                </tr>
-              
+                  <button className="closebtn" onClick={() => handleDeleteCart(item)}>×</button>
+                </div>
+                </th>
+              </tr>
+              <tr>
+                <th>Цена</th>
+                <th>Количество</th>
+                <th>Аренда (мес.)</th>
+                <th>Сумма</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{item.good.price}</td>
+                <td> 
+                  <button onClick={() => handleQuantityChange(item, item.quantity - 1)}>-</button>
+                  <input className='changenum'
+                    type="number"
+                    value={item.quantity}
+                    onChange={(e) => handleQuantityChange(item, Number(e.target.value))}
+                  />
+                  <button onClick={() => handleQuantityChange(item, item.quantity + 1)}>+</button>
+                </td>
+                <td> 
+                  <button onClick={() => handleArendaTimeChange(item, item.arenda_time - 1)}>-</button>
+                  <input className='changenum'
+                    type="number"
+                    value={item.arenda_time}
+                    onChange={(e) =>
+                      handleArendaTimeChange(item, Number(e.target.value))
+                    }
+                  />
+                  <button onClick={() => handleArendaTimeChange(item, item.arenda_time + 1)}>+</button>
+                </td>
+                <td>{item.total_price}</td>
+              </tr>
+              <tr>
+                <td colSpan={4}>Заключить договор: 
+                  <input
+                    type="checkbox"
+                    checked={item.is_contract}
+                    onChange={(e) => handleContractToggle(item, e.target.checked)}
+                  />
+                  <button className='therm' onClick={() => alert(item.good.arenda_terms)}>Условия договора</button>
+                </td>
+              </tr>
             </tbody>
           </table>))}
         </div>
