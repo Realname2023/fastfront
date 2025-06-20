@@ -6,7 +6,7 @@ import './index.css';
 import App from './App.jsx';
 import Goods from './components/Goods.jsx';
 import Cart from './components/Cart';
-import { TelegramWebAppProvider } from './context/TelegramContext';
+// import { TelegramWebAppProvider } from './context/TelegramContext';
 
 
 createRoot(document.getElementById('root')).render(

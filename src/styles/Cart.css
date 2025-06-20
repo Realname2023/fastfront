@@ -1,45 +1,34 @@
-/* body {
-  font-family: Arial, sans-serif;
-  background-color: #f8f9fa;
-  margin: 0;
-  padding: 0;
-} */
-
-/* .container {
-  max-width: 600px;
-  margin: 20px auto;
-  padding: 15px;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-} */
 
 .cart {
-  width: 380px;
+  width: 100%;
   border-collapse: collapse;
-  margin-bottom: 15px;
+  font-size: 14px;
+  overflow: hidden;
   border: 1px solid #2ecf0e;
 }
 
-.cart th, .cart tr, .cart td {
-  text-align: center;
+.cart th, .cart td {
+  text-align: start;
+  font-size: 14px;
+  overflow: hidden;
   padding: 10px;
 }
 
 .cart input[type="number"] {
   text-align: center;
-  /* width: 50px; */
   border: 1px solid #ccc;
+  padding-top: 5px;
+  padding-bottom: 5px;
   border-radius: 5px;
-  font-size: 20px;
+  font-size: 14px;
 }
 
 .cart button {
   background: #008000;
   color: white;
   border: none;
-  font-size: 12px;
-  padding: 10px;
+  font-size: 14px;
+  padding: 5px 10px;
   border-radius: 5px;
   cursor: pointer;
   transition: 0.3s;
@@ -52,10 +41,6 @@
 .changenum {
   width: 30px;
 }
-
-/* button:hover {
-  background: #005f99;
-} */
 
 .cart input[type="checkbox"] {
   transform: scale(1.2);
@@ -74,30 +59,43 @@
 }
 
 .therm {
-width: 200px;
+  margin-left: 40px;
+  width: 150px;
 }
 
-/* .order-form {
+.to-order {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  align-items: center;
+}
+
+.form-order {
+  background-color: #008000;
+  font-size: 20px;
+  text-align: center;
+}
+
+.order-form table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+  border: 1px solid #2ecf0e;
+}
+
+.order-form td {
+  padding: 5px;
 }
 
 .order-form input,
 .order-form textarea {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  width: 100%;
+  width: 240px;
+  padding: 5px;
+  font-size: 16px;
 }
 
-.order-form button {
-  background: #008000;
+#ordering {
+  text-align: center;
 }
-
-/* .order-form button:hover {
-  background: #218838;
-} */
 
 .total {
   text-align: center;

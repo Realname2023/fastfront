@@ -1,5 +1,5 @@
 import '../styles/Cart.css';
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import API_URL from '../config';
@@ -14,6 +14,7 @@ const Cart = () => {
   const [showOrderForm, setShowOrderForm] = useState(false);
   const navigate = useNavigate();
   const userId = state?.userId;
+  const orderFormRef = useRef(null);
 
   tg.expand();
 
@@ -221,6 +222,9 @@ const Cart = () => {
       const response = await axios.get(`${API_URL}client/get/${userId}/`);
       setClientData(response.data);
       setShowOrderForm(true);
+      setTimeout(() => {
+        orderFormRef.current?.scrollIntoView({ behavior: "smooth" });
+      }, 100);
     } catch (error) {
       console.error("Ошибка загрузки данных клиента:", error);
     }
@@ -282,6 +286,12 @@ const Cart = () => {
     await fetchCart()
     tg.close()
   };
+
+  useEffect(() => {
+    if (goodsItems.length === 0 && arendaItems.length === 0) {
+      setShowOrderForm(false);
+    }
+  }, [goodsItems, arendaItems]);  
 
   return (
     <div>
@@ -403,54 +413,85 @@ const Cart = () => {
       <div>
         <h3>Итоговая сумма: {grandTotal} тнг</h3>
       </div>
-      {goodsItems.length > 0 || arendaItems.length > 0 ? (
-        <button onClick={handleOrderClick}>Оформить заказ</button>
-      ) : null}
-      {showOrderForm && clientData && (
-        <div>
+      <div className='to-order'>
+        {goodsItems.length > 0 || arendaItems.length > 0 ? (
+          <button className='form-order' onClick={handleOrderClick}>Оформить заказ</button>
+        ) : null}
+        {showOrderForm && clientData && (
+          <div ref={orderFormRef} className="order-form">
           <h3>Заполните данные</h3>
-          <p>Название организации: 
-          <input
-            type="text"
-            placeholder="Название организации"
-            value={clientData.org_name || ""}
-            onChange={(e) => setClientData({ ...clientData, org_name: e.target.value })}
-          /></p>
-          <p>Город: 
-          <input
-            type="text"
-            placeholder="Город"
-            value={clientData.client_city || ""}
-            onChange={(e) => setClientData({ ...clientData, client_city: e.target.value })}
-          /></p>
-          <p>Адрес:  
-          <input
-            type="text"
-            placeholder="Адрес"
-            value={clientData.address || ""}
-            onChange={(e) => setClientData({ ...clientData, address: e.target.value })}
-          /></p>
-          <p>Телефон: 
-          <input
-            type="text"
-            placeholder="Телефон"
-            value={clientData.phone || ""}
-            onChange={(e) => setClientData({ ...clientData, phone: e.target.value })}
-          /></p>
-          <p>
-          <textarea
-            placeholder="Комментарий к заказу"
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-          /></p>
-          <p>
-          <button onClick={handlePlaceOrder}>Заказать</button>
-          </p>
+          <table>
+            <tbody>
+              <tr>
+                <td>Название организации:</td>
+                <td>
+                  <input
+                    type="text"
+                    value={clientData.org_name || ""}
+                    onChange={(e) =>
+                      setClientData({ ...clientData, org_name: e.target.value })
+                    }
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>Город:</td>
+                <td>
+                  <input
+                    type="text"
+                    value={clientData.client_city || ""}
+                    onChange={(e) =>
+                      setClientData({ ...clientData, client_city: e.target.value })
+                    }
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>Адрес:</td>
+                <td>
+                  <input
+                    type="text"
+                    value={clientData.address || ""}
+                    onChange={(e) =>
+                      setClientData({ ...clientData, address: e.target.value })
+                    }
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>Телефон:</td>
+                <td>
+                  <input
+                    type="text"
+                    value={clientData.phone || ""}
+                    onChange={(e) =>
+                      setClientData({ ...clientData, phone: e.target.value })
+                    }
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>Комментарий:</td>
+                <td>
+                  <textarea
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td colSpan={2} id='ordering'>
+                  <button className='form-order' onClick={handlePlaceOrder}>Заказать</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-      )}
+        )}
+        {/* <button className='form-order' onClick={handlePlaceOrder}>Заказать</button> */}
+      </div>
     </div>
   );
 };
 
 export default Cart;
-

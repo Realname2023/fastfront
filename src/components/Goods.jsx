@@ -5,6 +5,8 @@ import React, { useEffect, useState } from 'react';
 import API_URL from '../config';
 import { tg } from '../App'; // Импортируем Telegram WebApp
 
+tg.expand();
+
 const Goods = () => {
   const { categoryId, selectedCity } = useParams();
   const [goods, setGoods] = useState([]);
@@ -156,7 +158,9 @@ const Goods = () => {
 
   useEffect(() => {
     if (userId) {
-      tg.MainButton.setText('🛒 Корзина');
+      tg.MainButton.setText('🛒 КОРЗИНА');
+      tg.MainButton.color = '#28a745';
+      tg.MainButton.textColor = '#000000';
       tg.MainButton.show();
       tg.MainButton.onClick(() => {
         navigate('/cart', { state: { userId } });
@@ -247,7 +251,7 @@ const Goods = () => {
                             Math.max(1, parseInt(e.target.value) || 1)
                           )
                         }
-                        style={{ width: '50px', textAlign: 'center' }}
+                        // style={{ width: '50px', textAlign: 'center' }}
                       />
                       <button
                         onClick={() =>
