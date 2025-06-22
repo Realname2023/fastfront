@@ -1,23 +1,33 @@
 /* Стили для адаптивной таблицы */
+.good-table {
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: collapse;
+}
+
+.good-table td {
+  width: 180px;
+  vertical-align: top;
+}
 
 .good {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-right: 5px;
-  margin-left: 5px;
-  padding-top: 40px;
-  padding-bottom: 40px;
-  border-bottom: 1px solid;
+  border: 2px solid #008000;
+  border-radius: 10px;
+  padding: 5px;
+  text-align: center;
   cursor: pointer;
   transition: transform 0.2s ease-in-out;
 }
 
 .good img {
-  width: 320px;
-  height: auto;
+  width: 160px;
+  height: 140px;
   border-radius: 10px;
-  cursor: pointer;
+  cursor: pointer
 }
 
 .good div {
@@ -31,15 +41,16 @@
     padding: 10px 15px;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 24px;
+    font-size: 14px;
     transition: background 0.3s;
 }
 
 .good input[type="number"] {
   background: white;
-  width: 50px;
+  border-radius: 5px;
+  width: 40px;
   padding: 10px 15px;
-  font-size: 24px;
+  font-size: 14px;
   text-align: center;
   color: black;
 }
@@ -49,15 +60,22 @@
 }
 
 #good-name {
-  font-size: 28px;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  height: 100px;
 }
 
 #good-price {
-  font-size: 24px;
+  font-size: 16px;
+}
+
+#good-desc {
+  margin: 10px;
 }
 
 .good-quantity {
-  font-size: 18px;
+  font-size: 16px;
 }
   
 .modal {

@@ -71,6 +71,9 @@
 
 .form-order {
   background-color: #008000;
+  width: 200px;
+  padding: 5px;
+  border-radius: 5px;
   font-size: 20px;
   text-align: center;
 }

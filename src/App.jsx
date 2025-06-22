@@ -62,17 +62,35 @@ const App = () => {
 
     return (
         <div>
-            {categories.map(category => (
-                <div className='category' key={category.id}>
-                    <img 
-                        src={category.photo} 
-                        alt={category.name} 
-                        onClick={() => openModal(category.id)} 
-                    />
-                    <div onClick={() => openModal(category.id)}>{category.name}</div>
-                    <button className='cat-button' onClick={() => openModal(category.id)}>Заказать</button>
-                </div>
-            ))}
+            <table className="category-table">
+                <tbody>
+                    {categories.reduce((rows, category, index) => {
+                    if (index % 2 === 0) {
+                        rows.push([category]); // начинаем новую строку
+                    } else {
+                        rows[rows.length - 1].push(category); // добавляем ко второй ячейке
+                    }
+                    return rows;
+                    }, []).map((row, rowIndex) => (
+                    <tr key={rowIndex}>
+                        {row.map((category) => (
+                        <td key={category.id}>
+                            <div className="category">
+                            <img
+                                src={category.photo}
+                                alt={category.name}
+                                onClick={() => openModal(category.id)}
+                            />
+                            <div onClick={() => openModal(category.id)}>{category.name}</div>
+                            <button className="cat-button" onClick={() => openModal(category.id)}>Заказать</button>
+                            </div>
+                        </td>
+                        ))}
+                        {row.length < 2 && <td />} {/* Пустая ячейка если нечетное количество */}
+                    </tr>
+                    ))}
+                </tbody>
+            </table>
             {isModalOpen && (
             <div className="modal">
                 <div className="modal-content">

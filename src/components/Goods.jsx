@@ -177,105 +177,124 @@ const Goods = () => {
 
   return (
     <div>
-      {goods.map((good) => (
-        <div className='good' key={good.id}>
-            <div>
-              <img
-                src={good.photo}
-                alt={good.name}
-                onClick={() => alert(good.description)}
-              />
-            </div>
-            <div id='good-name'>{good.name}</div>
-            <div><button onClick={() => alert(good.description)}>Описание</button></div>
-            <div id='good-price'>Цена: {good.price}</div>
-            {/* <div id='good-city'>Филиал: {good.city['name']}</div> */}
-            <div className='good-quantity'>Количество:</div>
-            <div>
-              {cart[good.id]?.inCart ? (
-                <button onClick={() => handleDeleteCart(good)}>
-                  В корзине {cart[good.id].quantity} шт{' '}
-                  {good.is_arenda && `на ${cart[good.id].arenda_time} мес`}
-                </button>
-              ) : (
-                <div>
-                  <button
-                    onClick={() =>
-                      handleChangeQuantity(
-                        good.id,
-                        (cart[good.id]?.quantity || 1) - 1
-                      )
+      <table className='good-table'>
+        <tbody>
+          {goods.reduce((rows, good, index) => {
+                    if (index % 2 === 0) {
+                        rows.push([good]); // начинаем новую строку
+                    } else {
+                        rows[rows.length - 1].push(good); // добавляем ко второй ячейке
                     }
-                  >
-                    -
-                  </button>
-                  <input
-                    type="number"
-                    value={cart[good.id]?.quantity || 1}
-                    onChange={(e) =>
-                      handleChangeQuantity(
-                        good.id,
-                        Math.max(1, parseInt(e.target.value) || 1)
-                      )
-                    }
-                  />
-                  <button
-                    onClick={() =>
-                      handleChangeQuantity(
-                        good.id,
-                        (cart[good.id]?.quantity || 1) + 1
-                      )
-                    }
-                  >
-                    +
-                  </button>
-                  {good.is_arenda && (
-                    <div>
-                      <div className='good-quantity'>Время аренды (мес):</div>
-                      <button
-                        onClick={() =>
-                          handleChangeArendaTime(
-                            good.id,
-                            (cart[good.id]?.arenda_time || 1) - 1
-                          )
-                        }
-                      >
-                        -
-                      </button>
-                      <input
-                        type="number"
-                        value={cart[good.id]?.arenda_time || 1}
-                        onChange={(e) =>
-                          handleChangeArendaTime(
-                            good.id,
-                            Math.max(1, parseInt(e.target.value) || 1)
-                          )
-                        }
-                        // style={{ width: '50px', textAlign: 'center' }}
-                      />
-                      <button
-                        onClick={() =>
-                          handleChangeArendaTime(
-                            good.id,
-                            (cart[good.id]?.arenda_time || 1) + 1
-                          )
-                        }
-                      >
-                        +
-                      </button>
-                    </div>
-                  )}
-                  <p><button
-                    className="add-to-order"
-                    onClick={() => handleAddToCart(good)}
-                  >
-                    Добавить в корзину
-                  </button></p>
-                </div>
-              )}
-            </div>
-        </div>
-      ))}
+                    return rows;
+                    }, []).map((row, rowIndex) => (
+                      <tr key={rowIndex}>
+                        {row.map((good) => (
+                          <td key={good.id}>
+                            <div className='good'>
+                                <div>
+                                  <img
+                                    src={good.photo}
+                                    alt={good.name}
+                                    onClick={() => alert(good.description)}
+                                  />
+                                </div>
+                                <div id='good-name'>{good.name}</div>
+                                <div id='good-price'>Цена: {good.price}</div>
+                                <div id='good-desc'><button onClick={() => alert(good.description)}>Описание</button></div>
+                                {/* <div id='good-city'>Филиал: {good.city['name']}</div> */}
+                                <div className='good-quantity'>Количество:</div>
+                                <div>
+                                  {cart[good.id]?.inCart ? (
+                                    <button onClick={() => handleDeleteCart(good)}>
+                                      В корзине {cart[good.id].quantity} шт{' '}
+                                      {good.is_arenda && `на ${cart[good.id].arenda_time} мес`}
+                                    </button>
+                                  ) : (
+                                    <div>
+                                      <button
+                                        onClick={() =>
+                                          handleChangeQuantity(
+                                            good.id,
+                                            (cart[good.id]?.quantity || 1) - 1
+                                          )
+                                        }
+                                      >
+                                        -
+                                      </button>
+                                      <input
+                                        type="number"
+                                        value={cart[good.id]?.quantity || 1}
+                                        onChange={(e) =>
+                                          handleChangeQuantity(
+                                            good.id,
+                                            Math.max(1, parseInt(e.target.value) || 1)
+                                          )
+                                        }
+                                      />
+                                      <button
+                                        onClick={() =>
+                                          handleChangeQuantity(
+                                            good.id,
+                                            (cart[good.id]?.quantity || 1) + 1
+                                          )
+                                        }
+                                      >
+                                        +
+                                      </button>
+                                      {good.is_arenda && (
+                                        <div>
+                                          <div className='good-quantity'>Время аренды (мес):</div>
+                                          <button
+                                            onClick={() =>
+                                              handleChangeArendaTime(
+                                                good.id,
+                                                (cart[good.id]?.arenda_time || 1) - 1
+                                              )
+                                            }
+                                          >
+                                            -
+                                          </button>
+                                          <input
+                                            type="number"
+                                            value={cart[good.id]?.arenda_time || 1}
+                                            onChange={(e) =>
+                                              handleChangeArendaTime(
+                                                good.id,
+                                                Math.max(1, parseInt(e.target.value) || 1)
+                                              )
+                                            }
+                                            // style={{ width: '50px', textAlign: 'center' }}
+                                          />
+                                          <button
+                                            onClick={() =>
+                                              handleChangeArendaTime(
+                                                good.id,
+                                                (cart[good.id]?.arenda_time || 1) + 1
+                                              )
+                                            }
+                                          >
+                                            +
+                                          </button>
+                                        </div>
+                                      )}
+                                      <p><button
+                                        className="add-to-order"
+                                        onClick={() => handleAddToCart(good)}
+                                      >
+                                        Добавить в корзину
+                                      </button></p>
+                                    </div>
+                                    
+                                  )}
+                                </div>
+                            </div>
+                            </td>
+                            ))}
+                            {row.length < 2 && <td />}
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
