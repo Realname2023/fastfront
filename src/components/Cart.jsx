@@ -231,10 +231,10 @@ const Cart = () => {
   };
 
   const handlePlaceOrder = async () => {
-    const { org_name, client_city, address, phone } = clientData;
+    const { org_name, client_city, address, phone, phone2 } = clientData;
     let orderText = `Заказ от ${org_name || "Не указано"} из ${client_city || "Не указано"}:
 `;
-    orderText += `Организация: ${org_name || "Не указано"}\nАдрес: ${address || "Не указан"}\nТелефон: ${phone || "Не указан"}\n`;
+    orderText += `Организация: ${org_name || "Не указано"}\nАдрес: ${address || "Не указан"}\nТелефон: ${phone || "Не указан"}\nРабочий телефон: ${phone2 || "Не указан"}\n`;
     orderText += "--------------------------------------------\n";
 
     goodsItems.forEach((item) => {
@@ -242,7 +242,7 @@ const Cart = () => {
       orderText += `в количестве ${item.quantity} шт.\n`;
       orderText += `по цене ${item.good.price} тенге\n`;
       orderText += `на сумму ${item.total_price} тенге\n`;
-      orderText += `Склад: ${item.good.city}\n`;
+      orderText += `Склад: ${item.good.city.name}\n`;
       orderText += "--------------------------------------------\n";
     });
 
@@ -251,7 +251,7 @@ const Cart = () => {
       orderText += `в количестве ${item.quantity} шт. на ${item.arenda_time} месяцев\n`;
       orderText += `по цене ${item.good.price} тенге\n`;
       orderText += `на сумму ${item.total_price} тенге\n`;
-      orderText += `Склад: ${item.good.city}\n`;
+      orderText += `Склад: ${item.good.city.name}\n`;
       orderText += "--------------------------------------------\n";
     });
 
@@ -266,6 +266,7 @@ const Cart = () => {
       client_city,
       address,
       phone,
+      phone2,
       is_contract: false
     }
 
@@ -463,9 +464,9 @@ const Cart = () => {
                 <td>
                   <input
                     type="text"
-                    value={clientData.phone || ""}
+                    value={clientData.phone2 || ""}
                     onChange={(e) =>
-                      setClientData({ ...clientData, phone: e.target.value })
+                      setClientData({ ...clientData, phone2: e.target.value })
                     }
                   />
                 </td>
